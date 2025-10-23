@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الجو الحاكم - أرشيف تحميل الألعاب | HACKER MODE</title>
+    <!-- تحميل مكتبة Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* تعريف خط Monospace لمحاكاة شاشة الكونسول (Hacker Theme) */
+        body {
+            font-family: monospace, sans-serif;
+            background-color: #0d1117; /* خلفية داكنة جداً */
+            color: #00ff00; /* النص الأساسي باللون الأخضر النيون */
+            /* تفعيل التوهج الخفيف على النص */
+            text-shadow: 0 0 5px rgba(0, 255, 0, 0.4);
+        }
+        /* تصميم خاص للبطاقات لتظهر كـ "نافذة كود" */
+        .hacker-card {
+            border: 1px solid #00ff00;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.5); /* توهج قوي حول البطاقة */
+            transition: all 0.3s ease;
+        }
+        .hacker-card:hover {
+            box-shadow: 0 0 25px rgba(0, 255, 0, 0.8); /* توهج أقوى عند المرور */
+            transform: translateY(-5px);
+        }
+        .hacker-button {
+            background-color: #008000; /* لون أخضر داكن للزر */
+            border: 2px solid #00ff00;
+            color: #ffffff;
+            text-shadow: 0 0 3px rgba(255, 255, 255, 0.6);
+        }
+        .hacker-button:hover {
+            background-color: #00ff00; /* يصبح نيون عند التحويم */
+            color: #0d1117;
+            text-shadow: none;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- شريط الترحيب والأوامر (Header) -->
+    <header class="bg-gray-900 border-b-2 border-green-500/50 shadow-xl sticky top-0 z-10">
+        <div class="max-w-7xl mx-auto p-4 flex justify-between items-center">
+            <!-- اسم المدونة كـ "رمز نظام" -->
+            <a href="#" class="text-3xl font-bold text-green-500">
+                [Root@AlHakem_Games] ~#
+            </a>
+            <!-- أزرار التنقل -->
+            <nav class="space-x-6 space-x-reverse text-sm hidden sm:flex">
+                <a href="#" class="text-green-400 hover:text-green-200 transition duration-300">/DOWNLOADS</a>
+                <a href="#" class="text-green-400 hover:text-green-200 transition duration-300">/TOOLS</a>
+                <a href="#" class="text-green-400 hover:text-green-200 transition duration-300">/CONTACT</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- القسم الرئيسي للمحتوى (البطاقات والروابط) -->
+    <main class="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
+
+        <!-- رسالة الترحيب الخاصة بـ الهاكر -->
+        <section class="text-center mb-10 p-6 bg-gray-900/50 rounded-lg border border-green-500/30">
+            <h1 class="text-3xl font-bold mb-4 text-green-400">ACCESS GRANTED. مرحبا بك في موقعي لتنزيل الألعاب.</h1>
+            <p class="text-lg text-gray-300">
+                [Executing Command: DISPLAY_LATEST_GAMES.EXE]
+                <br class="hidden sm:block">
+                تصفح أحدث ملفات الألعاب بروابط آمنة وموثوقة.
+            </p>
+        </section>
+
+        <!-- شبكة المنشورات - تم تعديلها لعرض بطاقتين (md:grid-cols-2) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-8">
+
+            <!-- البطاقة رقم 1: لعبة الهاكرز (Cyberpunk Theme) -->
+            <div class="bg-gray-900 rounded-xl hacker-card overflow-hidden">
+                <div class="p-6">
+                    <div class="flex items-center mb-4 border-b border-green-500/30 pb-3">
+                        <span class="text-3xl font-extrabold text-green-500">[FILE_ID: 001]</span>
+                    </div>
+                    
+                    <h2 class="text-2xl font-bold text-white mb-2 text-shadow-lg">سايبر سيتي - اختراق النظم</h2>
+                    <p class="text-gray-400 mb-4 h-16 overflow-hidden text-sm">لعبة هاكرز بامتياز. انغمس في مدينة مستقبلية مظلمة، وقم باختراق الشبكات الأمنية، وتجنب الرصد. استراتيجية وقتال ممزوج بأسلوب فريد.</p>
+                    
+                    <div class="mb-4 space-x-3 space-x-reverse text-xs">
+                        <span class="inline-block bg-green-900/50 text-green-400 px-3 py-1 rounded-full">#Hacking</span>
+                        <span class="inline-block bg-green-900/50 text-green-400 px-3 py-1 rounded-full">#RPG</span>
+                        <span class="inline-block bg-green-900/50 text-green-400 px-3 py-1 rounded-full">#Offline</span>
+                    </div>
+                    
+                    <!-- زر التحميل الرئيسي -->
+                    <a href="https://your-download-link-1.com" target="_blank" class="block text-center hacker-button font-semibold py-3 rounded-lg mt-4 transition duration-300 ease-in-out">
+                        [لينك التحميل💋]
+                    </a>
+                </div>
+            </div>
+
+            <!-- البطاقة رقم 2: لعبة الاستراتيجية العسكرية (Military Theme) -->
+            <div class="bg-gray-900 rounded-xl hacker-card overflow-hidden">
+                <div class="p-6">
+                    <div class="flex items-center mb-4 border-b border-green-500/30 pb-3">
+                        <span class="text-3xl font-extrabold text-green-500">[FILE_ID: 002]</span>
+                    </div>
+                    
+                    <h2 class="text-2xl font-bold text-white mb-2 text-shadow-lg">التحكم في ساحة المعركة</h2>
+                    <p class="text-gray-400 mb-4 h-16 overflow-hidden text-sm">محاكاة عسكرية متقدمة تتطلب إدارة الموارد وتنسيق الهجمات. استخدم التكنولوجيا والذكاء الاصطناعي لتدمير العدو. حجم الملف: 8.5 GB.</p>
+                    
+                    <div class="mb-4 space-x-3 space-x-reverse text-xs">
+                        <span class="inline-block bg-green-900/50 text-green-400 px-3 py-1 rounded-full">#Strategy</span>
+                        <span class="inline-block bg-green-900/50 text-green-400 px-3 py-1 rounded-full">#Simulation</span>
+                        <span class="inline-block bg-green-900/50 text-green-400 px-3 py-1 rounded-full">#Online</span>
+                    </div>
+                    
+                    <!-- زر التحميل الرئيسي -->
+                    <a href="https://your-download-link-2.com" target="_blank" class="block text-center hacker-button font-semibold py-3 rounded-lg mt-4 transition duration-300 ease-in-out">
+                        [لينك التحميل💋]
+                    </a>
+                </div>
+            </div>
+
+            <!-- البطاقة رقم 3: لعبة المغامرات السرية (Spy Theme) -->
+            <div class="bg-gray-900 rounded-xl hacker-card overflow-hidden">
+                <div class="p-6">
+                    <div class="flex items-center mb-4 border-b border-green-500/30 pb-3">
+                        <span class="text-3xl font-extrabold text-green-500">[FILE_ID: 003]</span>
+                    </div>
+                    
+                    <h2 class="text-2xl font-bold text-white mb-2 text-shadow-lg">عملية الظل الصامت</h2>
+                    <p class="text-gray-400 mb-4 h-16 overflow-hidden text-sm">لعبة تسلل وتخفي من منظور الشخص الثالث. حل الألغاز وتجنب الحراس في مستويات مصممة بدقة عالية. مثالية لمحبي القصص البوليسية.</p>
+                    
+                    <div class="mb-4 space-x-3 space-x-reverse text-xs">
+                        <span class="inline-block bg-green-900/50 text-green-400 px-3 py-1 rounded-full">#Stealth</span>
+                        <span class="inline-block bg-green-900/50 text-green-400 px-3 py-1 rounded-full">#Action</span>
+                        <span class="inline-block bg-green-900/50 text-green-400 px-3 py-1 rounded-full">#New</span>
+                    </div>
+                    
+                    <!-- زر التحميل الرئيسي -->
+                    <a href="https://your-download-link-3.com" target="_blank" class="block text-center hacker-button font-semibold py-3 rounded-lg mt-4 transition duration-300 ease-in-out">
+                        [لينك التحميل💋]
+                    </a>
+                </div>
+            </div>
+
+            <!-- البطاقة رقم 4: لعبة الألغاز الفضائية (Sci-Fi Theme) -->
+            <div class="bg-gray-900 rounded-xl hacker-card overflow-hidden">
+                <div class="p-6">
+                    <div class="flex items-center mb-4 border-b border-green-500/30 pb-3">
+                        <span class="text-3xl font-extrabold text-green-500">[FILE_ID: 004]</span>
+                    </div>
+                    
+                    <h2 class="text-2xl font-bold text-white mb-2 text-shadow-lg">لغز سفينة النجوم المفقودة</h2>
+                    <p class="text-gray-400 mb-4 h-16 overflow-hidden text-sm">لعبة ألغاز في الفضاء. اكتشف الأسرار وحل الشيفرات المعقدة لإصلاح سفينة النجوم العملاقة. رسومات خيال علمي متقنة.</p>
+                    
+                    <div class="mb-4 space-x-3 space-x-reverse text-xs">
+                        <span class="inline-block bg-green-900/50 text-green-400 px-3 py-1 rounded-full">#Puzzle</span>
+                        <span class="inline-block bg-green-900/50 text-green-400 px-3 py-1 rounded-full">#SciFi</span>
+                        <span class="inline-block bg-green-900/50 text-green-400 px-3 py-1 rounded-full">#VR Ready</span>
+                    </div>
+                    
+                    <!-- زر التحميل الرئيسي -->
+                    <a href="https://your-download-link-4.com" target="_blank" class="block text-center hacker-button font-semibold py-3 rounded-lg mt-4 transition duration-300 ease-in-out">
+                        [لينك التحميل💋]
+                    </a>
+                </div>
+            </div>
+
+            <!-- ملاحظة: تم إضافة أربع بطاقات الآن. يمكنك حذف أو إضافة المزيد بتكرار الكود من 
+                 <div class="bg-gray-900 rounded-xl hacker-card overflow-hidden"> إلى نهاية </div> -->
+
+        </div>
+
+        <!-- معلومات النظام (الفوتر) -->
+        <div class="text-center mt-16 p-4 border-t border-green-500/30">
+            <p class="text-sm text-green-400">
+                [SYSTEM_STATUS: ONLINE] [VERSION: 1.0.1]
+            </p>
+            <p class="text-xs text-gray-500 mt-2">
+                &copy; 2025 الجو الحاكم💋. (C)
+            </p>
+        </div>
+    </main>
+</body>
+</html>
