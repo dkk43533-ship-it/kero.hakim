@@ -77,6 +77,20 @@
         .promo-area {
             background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
         }
+
+        /* تعديل خاص لزر الدردشة لضمان عمله */
+        #send-btn {
+            background-color: #059691; /* Teal 600 - لون أقوى لجعله بارزاً */
+            cursor: pointer; /* مؤشر الماوس */
+            transition: background-color 0.2s;
+        }
+        #send-btn:hover:not(:disabled) {
+            background-color: #0f766e; /* Teal 700 */
+        }
+        #send-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
     </style>
 </head>
 <body class="min-h-screen">
@@ -138,11 +152,12 @@
                 <div id="chat-window" class="h-80 overflow-y-auto p-4 mb-4 border border-blue-200 rounded-xl bg-gray-50 flex flex-col space-y-3">
                     <!-- الرسائل الترحيبية سيتم إضافتها بواسطة JavaScript -->
                 </div>
-                <div class="flex items-center">
+                <!-- إصلاح التنسيق هنا لضمان عمل الزر -->
+                <div class="flex items-center w-full"> 
                     <!-- حقل الإدخال -->
                     <input type="text" id="user-input" placeholder="اسأل عن ميزة واتساب، أو من صنعني؟" class="flex-grow p-3 border border-blue-300 rounded-r-xl rounded-l-none focus:outline-none focus:ring-2 focus:ring-primary text-right" onkeypress="if(event.key === 'Enter') sendMessageToKiroAI()">
                     <!-- زر الإرسال -->
-                    <button id="send-btn" onclick="sendMessageToKiroAI()" class="bg-primary text-white p-3 rounded-l-xl rounded-r-none hover:bg-teal-600 transition duration-200 font-semibold flex-shrink-0">
+                    <button id="send-btn" onclick="sendMessageToKiroAI()" class="bg-primary text-white p-3 rounded-l-xl rounded-r-none hover:bg-teal-600 transition duration-200 font-semibold flex-shrink-0 px-6">
                         إرسال
                     </button>
                 </div>
@@ -226,9 +241,7 @@
         // 1. منطق ذكاء كيرو (Kiro AI Chatbot Logic)
         // ===================================================================
 
-        let kiroChatHistory = [
-            // يتم إدراج رسالة ترحيبية بعد تحميل الصفحة
-        ];
+        let kiroChatHistory = [];
 
         const kiroSystemPrompt = "أنت ذكاء كيرو (Kiro's Intelligence)، نموذج لغوي متقدم صُنع خصيصاً بواسطة 'كيرو الحاكم'. مهمتك هي الإجابة عن أسئلة المستخدمين باللغة العربية بلهجة ودودة ومحترفة، مع التركيز على ميزات تطبيقات واتساب المعدلة، وخاصة نسخ كيرو الحاكم. يجب أن تكون إجاباتك مفيدة ومختصرة. عند السؤال عن هويتك، اذكر دائماً أن 'كيرو الحاكم' هو من قام بصنعك.";
 
@@ -321,15 +334,20 @@
             let attempts = 0;
             const maxAttempts = 3;
             const initialDelay = 1000;
+            
+            const lowerMessage = userMessage.toLowerCase();
+            let isCustomAnswer = false;
+
+            // 1. معالجة الأسئلة الخاصة (مين صنعك؟) محليًا لضمان الرد دائماً
+            if (lowerMessage.includes('مين صنعك') || lowerMessage.includes('من صنعك') || lowerMessage.includes('من قام ببرمجتك') || lowerMessage.includes('من أنت')) {
+                responseText = "أنا نموذج لغوي متقدم، وتم تطويري وبرمجتي بواسطة **كيرو الحاكم** شخصياً! أنا هنا لمساعدتك.";
+                success = true;
+                isCustomAnswer = true;
+            }
 
             try {
-                // معالجة الأسئلة الخاصة (مين صنعك؟) محليًا
-                const lowerMessage = userMessage.toLowerCase();
-                if (lowerMessage.includes('مين صنعك') || lowerMessage.includes('من صنعك') || lowerMessage.includes('من قام ببرمجتك') || lowerMessage.includes('من أنت')) {
-                    responseText = "أنا نموذج لغوي متقدم، وتم تطويري وبرمجتي بواسطة **كيرو الحاكم** شخصياً! أنا هنا لمساعدتك.";
-                    success = true; // تم الحصول على الرد محليًا
-                } else {
-                    // تهيئة بيانات الحمولة للاستدعاء الخارجي
+                if (!isCustomAnswer) {
+                    // 2. محاولة الاتصال بـ Gemini API
                     const payload = {
                         contents: kiroChatHistory,
                         systemInstruction: {
@@ -337,7 +355,6 @@
                         },
                     };
 
-                    // آلية التراجع الأُسّي لإعادة المحاولة (Gemini API Call)
                     while (attempts < maxAttempts && !success) {
                         const response = await fetch(apiUrl, {
                             method: 'POST',
@@ -347,31 +364,46 @@
 
                         if (response.status === 429) {
                             const delay = initialDelay * Math.pow(2, attempts);
+                            console.warn(`Rate limit hit, retrying in ${delay}ms...`);
                             await new Promise(resolve => setTimeout(resolve, delay));
                             attempts++;
                             continue;
                         }
 
                         if (!response.ok) {
+                            // إذا لم يكن الخطأ 429، نخرج من الحلقة ونعتبره فشلاً
                             throw new Error(`HTTP error! status: ${response.status}`);
                         }
 
                         const result = await response.json();
-                        responseText = result.candidates?.[0]?.content?.parts?.[0]?.text || "لم أتمكن من العثور على إجابة.";
-                        success = true;
+                        // التحقق من وجود النص في الرد
+                        const generatedText = result.candidates?.[0]?.content?.parts?.[0]?.text;
+                        if (generatedText) {
+                            responseText = generatedText;
+                            success = true;
+                        } else {
+                             // فشل في تحليل الرد أو الرد فارغ
+                            throw new Error("Empty or invalid response structure from API.");
+                        }
                     }
                 }
-
-                // عرض الرد وتحديث السجل
+                
+                // 3. عرض الرد وتحديث السجل
                 displayMessage(responseText, 'model');
                 kiroChatHistory.push({ role: "model", parts: [{ text: responseText }] });
                 
             } catch (error) {
                 console.error("Gemini API Error in Chat:", error);
-                // رسالة خطأ للمستخدم إذا فشل كل شيء
-                const errorMessage = "عذراً، واجهت مشكلة في الاتصال. الرجاء المحاولة مرة أخرى.";
+                
+                // 4. آلية التعويض عند الفشل التام في الاتصال
+                const errorMessage = "عذراً، واجهت مشكلة في الاتصال. ربما تكون مشكلة مؤقتة في خوادم الخدمة. يرجى المحاولة مرة أخرى أو سؤالنا عن معلومات عامة مثل 'من صنعك؟'.";
+                
                 displayMessage(errorMessage, 'model');
+                
+                // تنظيف سجل الدردشة للحفاظ على حجمه في حال فشل الاتصال المتكرر
+                kiroChatHistory = kiroChatHistory.slice(0, 1); // الإبقاء على الرسالة الترحيبية فقط
                 kiroChatHistory.push({ role: "model", parts: [{ text: errorMessage }] });
+
             } finally {
                 // هذا الجزء يضمن إعادة تفعيل الزر وإزالة رسالة التفكير دائماً
                 removeLoadingMessage(loadingId);
