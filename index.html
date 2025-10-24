@@ -73,17 +73,6 @@
             transform: scale(1.05);
         }
         
-        /* ستايل زر اقتراح الميزات */
-        .btn-gemini {
-            background-color: #059669; /* لون أخضر داكن */
-            color: white;
-            font-weight: 600;
-            transition: background-color 0.3s;
-        }
-        .btn-gemini:hover {
-            background-color: #047857; /* أخضر أغمق */
-        }
-
         /* تأثير الحركة للخلفية في منطقة الترويج */
         .promo-area {
             background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
@@ -147,7 +136,7 @@
                     🤖 ذكاء كيرو - مساعدك الذكي
                 </h2>
                 <div id="chat-window" class="h-80 overflow-y-auto p-4 mb-4 border border-blue-200 rounded-xl bg-gray-50 flex flex-col space-y-3">
-                    <!-- الرسائل الترحيبية -->
+                    <!-- الرسائل الترحيبية سيتم إضافتها بواسطة JavaScript -->
                 </div>
                 <div class="flex">
                     <input type="text" id="user-input" placeholder="اسأل عن ميزة واتساب، أو من صنعني؟" class="flex-grow p-3 border border-blue-300 rounded-r-xl focus:outline-none focus:ring-2 focus:ring-primary text-right" onkeypress="if(event.key ===  Enter ) sendMessageToKiroAI()">
@@ -174,13 +163,6 @@
                     <a href="https://download.hakamdar.com/basic_v12.apk" target="_blank" class="btn-primary w-full text-sm inline-block mb-4">
                         تحميل (55MB)
                     </a>
-                    
-                    <!-- Gemini Feature Integration -->
-                    <button id="gemini-btn-1" onclick="generateFeatureSuggestion( النسخة الأساسية (V12) ,  security and stability ,  suggestion-output-1 ,  gemini-btn-1 )" 
-                            class="btn-gemini w-full py-2 px-4 rounded-full text-sm transition duration-200 mb-2">
-                        ✨ اقتراح ميزة جديدة
-                    </button>
-                    <div id="suggestion-output-1"></div>
                 </div>
 
                 <!-- بطاقة 2: البلس (Focus: Customization) -->
@@ -191,13 +173,6 @@
                     <a href="https://download.hakamdar.com/plus_v9.apk" target="_blank" class="btn-primary w-full text-sm inline-block mb-4">
                         تحميل (60MB)
                     </a>
-                    
-                    <!-- Gemini Feature Integration -->
-                    <button id="gemini-btn-2" onclick="generateFeatureSuggestion( نسخة البلس (V9) ,  unlimited customization and themes ,  suggestion-output-2 ,  gemini-btn-2 )" 
-                            class="btn-gemini w-full py-2 px-4 rounded-full text-sm transition duration-200 mb-2">
-                        ✨ اقتراح ميزة جديدة
-                    </button>
-                    <div id="suggestion-output-2"></div>
                 </div>
                 
                 <!-- بطاقة 3: للأعمال (Focus: Business & Automation) -->
@@ -208,13 +183,6 @@
                     <a href="https://download.hakamdar.com/business_v5.apk" target="_blank" class="btn-primary w-full text-sm inline-block mb-4">
                         تحميل (58MB)
                     </a>
-
-                    <!-- Gemini Feature Integration -->
-                    <button id="gemini-btn-3" onclick="generateFeatureSuggestion( واتساب الأعمال (V5) ,  business features and automated marketing ,  suggestion-output-3 ,  gemini-btn-3 )" 
-                            class="btn-gemini w-full py-2 px-4 rounded-full text-sm transition duration-200 mb-2">
-                        ✨ اقتراح ميزة جديدة
-                    </button>
-                    <div id="suggestion-output-3"></div>
                 </div>
                 
                 <!-- بطاقة 4: لايت (Focus: Performance & Speed) -->
@@ -225,13 +193,6 @@
                     <a href="https://download.hakamdar.com/lite_v3.apk" target="_blank" class="btn-primary w-full text-sm inline-block mb-4">
                         تحميل (40MB)
                     </a>
-
-                    <!-- Gemini Feature Integration -->
-                    <button id="gemini-btn-4" onclick="generateFeatureSuggestion( نسخة لايت (V3) ,  speed and lightweight performance ,  suggestion-output-4 ,  gemini-btn-4 )" 
-                            class="btn-gemini w-full py-2 px-4 rounded-full text-sm transition duration-200 mb-2">
-                        ✨ اقتراح ميزة جديدة
-                    </button>
-                    <div id="suggestion-output-4"></div>
                 </div>
 
             </div>
@@ -262,15 +223,16 @@
         // ===================================================================
 
         let kiroChatHistory = [
-            { role: "model", parts: [{ text: "مرحباً! أنا ذكاء كيرو، مساعدك الشخصي للإجابة عن كل ما يخص نسخ واتساب كيرو الحاكم. كيف يمكنني مساعدتك؟" }] }
+            // يتم إدراج رسالة ترحيبية بعد تحميل الصفحة
         ];
 
         const kiroSystemPrompt = "أنت ذكاء كيرو (Kiro s Intelligence)، نموذج لغوي متقدم صُنع خصيصاً بواسطة  كيرو الحاكم . مهمتك هي الإجابة عن أسئلة المستخدمين باللغة العربية بلهجة ودودة ومحترفة، مع التركيز على ميزات تطبيقات واتساب المعدلة، وخاصة نسخ كيرو الحاكم. يجب أن تكون إجاباتك مفيدة ومختصرة. عند السؤال عن هويتك، اذكر دائماً أن  كيرو الحاكم  هو من قام بصنعك.";
 
         document.addEventListener( DOMContentLoaded , () => {
-            // عرض الرسالة الترحيبية عند تحميل الصفحة
-            const welcomeMessage = kiroChatHistory[0].parts[0].text;
+            // إضافة الرسالة الترحيبية عند تحميل الصفحة
+            const welcomeMessage = "مرحباً! أنا ذكاء كيرو، مساعدك الشخصي للإجابة عن كل ما يخص نسخ واتساب كيرو الحاكم. كيف يمكنني مساعدتك؟";
             displayMessage(welcomeMessage,  model );
+            kiroChatHistory.push({ role: "model", parts: [{ text: welcomeMessage }] });
         });
 
         /**
@@ -300,6 +262,8 @@
          */
         async function sendMessageToKiroAI() {
             const inputElement = document.getElementById( user-input );
+            const sendBtn = document.getElementById( send-btn );
+            
             const userMessage = inputElement.value.trim();
             if (!userMessage) return;
 
@@ -310,164 +274,67 @@
             kiroChatHistory.push({ role: "user", parts: [{ text: userMessage }] });
 
             // تعطيل الزر وعرض حالة التحميل
-            const sendBtn = document.getElementById( send-btn );
             sendBtn.disabled = true;
             sendBtn.innerHTML =  ... ;
-
-            // معالجة الأسئلة الخاصة (مين صنعك؟)
-            const lowerMessage = userMessage.toLowerCase();
-            if (lowerMessage.includes( مين صنعك ) || lowerMessage.includes( من صنعك ) || lowerMessage.includes( من قام ببرمجتك )) {
-                const aiResponse = "أنا نموذج لغوي متقدم، وتم تطويري وبرمجتي بواسطة **كيرو الحاكم** شخصياً! أنا هنا لمساعدتك.";
-                displayMessage(aiResponse,  model );
-                kiroChatHistory.push({ role: "model", parts: [{ text: aiResponse }] });
-                sendBtn.disabled = false;
-                sendBtn.innerHTML =  إرسال ;
-                return;
-            }
             
-            // تهيئة بيانات الحمولة
-            const payload = {
-                contents: kiroChatHistory,
-                systemInstruction: {
-                    parts: [{ text: kiroSystemPrompt }]
-                },
-            };
-
-            let attempts = 0;
-            const maxAttempts = 3;
-            const initialDelay = 1000;
-
             let responseText = "تعذر توليد الرد. يرجى المحاولة مرة أخرى.";
             let success = false;
-
-            // آلية التراجع الأُسّي لإعادة المحاولة (Gemini API Call)
-            while (attempts < maxAttempts && !success) {
-                try {
-                    const response = await fetch(apiUrl, {
-                        method:  POST ,
-                        headers: {  Content-Type :  application/json  },
-                        body: JSON.stringify(payload)
-                    });
-
-                    if (response.status === 429) {
-                        const delay = initialDelay * Math.pow(2, attempts);
-                        await new Promise(resolve => setTimeout(resolve, delay));
-                        attempts++;
-                        continue;
-                    }
-
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-
-                    const result = await response.json();
-                    responseText = result.candidates?.[0]?.content?.parts?.[0]?.text || "لم أتمكن من العثور على إجابة.";
-                    success = true;
-
-                } catch (error) {
-                    console.error("Gemini API Error in Chat:", error);
-                    responseText = "حدث خطأ في الاتصال بالذكاء الاصطناعي.";
-                    success = false;
-                    break;
-                }
-            }
-
-            // عرض الرد وتحديث السجل
-            displayMessage(responseText,  model );
-            kiroChatHistory.push({ role: "model", parts: [{ text: responseText }] });
-            
-            // إعادة تفعيل الزر
-            sendBtn.disabled = false;
-            sendBtn.innerHTML =  إرسال ;
-        }
-
-
-        // ===================================================================
-        // 2. منطق اقتراح الميزات (Feature Suggestion Logic - Existing)
-        // ===================================================================
-
-        /**
-         * توليد اقتراح ميزة جديدة باستخدام نموذج Gemini
-         * @param {string} versionName اسم النسخة (لإدخالها في الموجه)
-         * @param {string} niche التركيز الأساسي للنسخة (أمان، تخصيص، أعمال، سرعة)
-         * @param {string} outputElementId معرف العنصر لعرض النتيجة
-         * @param {string} buttonElementId معرف زر التشغيل
-         */
-        async function generateFeatureSuggestion(versionName, niche, outputElementId, buttonElementId) {
-            const outputElement = document.getElementById(outputElementId);
-            const buttonElement = document.getElementById(buttonElementId);
-
-            // تعطيل الزر وعرض حالة التحميل
-            buttonElement.disabled = true;
-            buttonElement.innerHTML =  جاري التفكير... ;
-            outputElement.innerHTML =  <p class="text-sm text-center text-blue-500 mt-2">✨ جاري جلب الاقتراح الإبداعي...</p> ;
-
-            // بناء الاستعلام الموجه لنموذج Gemini
-            const userQuery = `Generate one short, unique, highly compelling feature idea focused on ${niche} for the WhatsApp mod named  ${versionName} . The feature name must be in Arabic, and the description must be concise, also in Arabic. Respond ONLY with the feature name, followed by a colon, then the description. Example:  وضع الشبح المطلق: إخفاء ظهورك تماماً أثناء الاتصال. `;
-            
-            const featureSystemPrompt = "أنت خبير تسويق وتطوير تطبيقات WhatsApp. مهمتك هي توليد أفكار ميزات حصرية وجذابة لنسخ معدلة، مع التركيز على نقطة البيع الفريدة لكل نسخة.";
-
-            const payload = {
-                contents: [{ parts: [{ text: userQuery }] }],
-                systemInstruction: {
-                    parts: [{ text: featureSystemPrompt }]
-                },
-            };
-
-            let response;
             let attempts = 0;
             const maxAttempts = 3;
             const initialDelay = 1000;
 
-            // آلية التراجع الأُسّي (Exponential Backoff) لإعادة المحاولة
-            while (attempts < maxAttempts) {
-                try {
-                    response = await fetch(apiUrl, {
-                        method:  POST ,
-                        headers: {  Content-Type :  application/json  },
-                        body: JSON.stringify(payload)
-                    });
+            try {
+                // معالجة الأسئلة الخاصة (مين صنعك؟) محليًا
+                const lowerMessage = userMessage.toLowerCase();
+                if (lowerMessage.includes( مين صنعك ) || lowerMessage.includes( من صنعك ) || lowerMessage.includes( من قام ببرمجتك ) || lowerMessage.includes( من أنت )) {
+                    responseText = "أنا نموذج لغوي متقدم، وتم تطويري وبرمجتي بواسطة **كيرو الحاكم** شخصياً! أنا هنا لمساعدتك.";
+                    success = true; // تم الحصول على الرد محليًا
+                } else {
+                    // تهيئة بيانات الحمولة للاستدعاء الخارجي
+                    const payload = {
+                        contents: kiroChatHistory,
+                        systemInstruction: {
+                            parts: [{ text: kiroSystemPrompt }]
+                        },
+                    };
 
-                    if (response.status === 429) {
-                        // الحد الأقصى للمعدل - الانتظار وإعادة المحاولة
-                        const delay = initialDelay * Math.pow(2, attempts);
-                        await new Promise(resolve => setTimeout(resolve, delay));
-                        attempts++;
-                        continue;
+                    // آلية التراجع الأُسّي لإعادة المحاولة (Gemini API Call)
+                    while (attempts < maxAttempts && !success) {
+                        const response = await fetch(apiUrl, {
+                            method:  POST ,
+                            headers: {  Content-Type :  application/json  },
+                            body: JSON.stringify(payload)
+                        });
+
+                        if (response.status === 429) {
+                            const delay = initialDelay * Math.pow(2, attempts);
+                            await new Promise(resolve => setTimeout(resolve, delay));
+                            attempts++;
+                            continue;
+                        }
+
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+
+                        const result = await response.json();
+                        responseText = result.candidates?.[0]?.content?.parts?.[0]?.text || "لم أتمكن من العثور على إجابة.";
+                        success = true;
                     }
-
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-
-                    const result = await response.json();
-                    const text = result.candidates?.[0]?.content?.parts?.[0]?.text || "تعذر توليد الاقتراح.";
-                    
-                    // محاولة تنسيق المخرجات
-                    const parts = text.split( : );
-                    let featureName = parts[0].trim();
-                    let description = parts.slice(1).join( : ).trim();
-                    
-                    if (!description || featureName.length > 50) { // في حال فشل التنسيق، عرض النص بالكامل
-                         featureName = "اقتراح ميزة جديدة (غير منسق)";
-                         description = text;
-                    }
-
-                    outputElement.innerHTML = `
-                        <div class="text-right p-3 bg-green-50 rounded-lg mt-3 border border-green-200">
-                            <p class="text-base font-bold text-gray-800 color-primary">✨ ${featureName}</p>
-                            <p class="text-sm text-gray-600">${description}</p>
-                        </div>
-                    `;
-                    break; // نجاح
-                } catch (error) {
-                    console.error("Gemini API Error:", error);
-                    outputElement.innerHTML =  <p class="text-sm text-center text-red-500 mt-2">حدث خطأ أثناء الاتصال بالخدمة. حاول مرة أخرى.</p> ;
-                    break; // التوقف عند الخطأ
-                } finally {
-                    buttonElement.disabled = false;
-                    buttonElement.innerHTML =  ✨ اقتراح ميزة جديدة ;
                 }
+
+                // عرض الرد وتحديث السجل
+                displayMessage(responseText,  model );
+                kiroChatHistory.push({ role: "model", parts: [{ text: responseText }] });
+                
+            } catch (error) {
+                console.error("Gemini API Error in Chat:", error);
+                // استخدام رسالة الخطأ الافتراضية إذا فشل الاستدعاء بعد المحاولات
+                displayMessage(responseText,  model );
+            } finally {
+                // إعادة تفعيل الزر وضبط النص النهائي
+                sendBtn.disabled = false;
+                sendBtn.innerHTML =  إرسال ;
             }
         }
     </script>
