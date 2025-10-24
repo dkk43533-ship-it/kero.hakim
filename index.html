@@ -3,97 +3,472 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>التقاط وإرسال الصورة عبر البريد</title>
-
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-    <script type="text/javascript">
-        // 🔑 تم استبدال المفتاح العام (Public Key)
-        (function() {
-            emailjs.init("WF5J_sXl1iz-prrm"); 
-        })();
-    </script>
-
+    <title>كيرو الحاكم - الأفضل بلا منازع</title>
+    
+    <!-- تحميل Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- تحميل خط القاهرة -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; background-color: #121212; color: #e0e0e0; padding: 20px; }
-        h1 { color: #00bcd4; }
-        .camera-feed { margin: 20px auto; width: 90%; max-width: 600px; border: 5px solid #00bcd4; background-color: #000; }
-        video { width: 100%; display: block; }
-        button { padding: 12px 25px; font-size: 18px; cursor: pointer; background-color: #4caf50; color: white; border: none; border-radius: 8px; margin-top: 15px; transition: background-color 0.3s; }
-        button:hover { background-color: #45a049; }
-        #status { margin-top: 20px; font-weight: bold; font-size: 1.1em; color: #ffeb3b; }
+        /* تعريف خط القاهرة */
+        body {
+            font-family:  Cairo , sans-serif;
+            background-color: #f0f8ff; /* خلفية بيضاء مائلة للزرقة الخفيفة (AliceBlue) */
+            color: #1f2937; 
+            direction: rtl; 
+        }
+
+        /* دمج الألوان: استخدام الأزرق السماوي (Cyan/Teal) كلون أساسي */
+        .color-primary {
+            color: #06b6d4; /* Teal 500 */
+        }
+        .bg-primary {
+            background-color: #06b6d4;
+        }
+        .border-primary {
+            border-color: #06b6d4;
+        }
+
+        /* تصميم البطاقة الحديثة (للتطبيقات والذكاء الاصطناعي) */
+        .modern-card {
+            background-color: #ffffff;
+            border-radius: 1rem; 
+            box-shadow: 0 10px 30px rgba(0, 50, 100, 0.1); 
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-top: 5px solid #0e7490; /* شريط علوي بلون أزرق داكن كراسة */
+        }
+        .modern-card:hover {
+            box-shadow: 0 15px 40px rgba(0, 70, 150, 0.15);
+        }
+
+        /* ستايل الأزرار الرئيسية */
+        .btn-primary {
+            background-color: #06b6d4;
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 9999px;
+            font-weight: 700;
+            transition: background-color 0.3s, transform 0.2s;
+            box-shadow: 0 5px 15px rgba(6, 182, 212, 0.4);
+        }
+        .btn-primary:hover {
+            background-color: #0ea5e9; /* Light Blue 500 */
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(14, 165, 233, 0.5);
+        }
+        
+        /* ستايل زر اليوتيوب */
+        .btn-youtube {
+            background-color: #ff0000; /* أحمر يوتيوب */
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 9999px;
+            font-weight: 700;
+            transition: background-color 0.3s, transform 0.2s;
+            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.4);
+        }
+        .btn-youtube:hover {
+            background-color: #cc0000;
+            transform: scale(1.05);
+        }
+        
+        /* ستايل زر اقتراح الميزات */
+        .btn-gemini {
+            background-color: #059669; /* لون أخضر داكن */
+            color: white;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        .btn-gemini:hover {
+            background-color: #047857; /* أخضر أغمق */
+        }
+
+        /* تأثير الحركة للخلفية في منطقة الترويج */
+        .promo-area {
+            background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
+        }
     </style>
 </head>
-<body>
+<body class="min-h-screen">
 
-    <h1>📸 التقط صورتك الآن 📸</h1>
-    <p>يُرجى النقر على "سماح" لاستخدام الكاميرا ثم اضغط على زر الإرسال.</p>
+    <!-- شريط التنقل (Header) -->
+    <header class="bg-white p-5 shadow-lg border-b-4 border-primary/50 sticky top-0 z-10">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-3xl font-black color-primary">
+                كيرو الحاكم
+            </h1>
+            <nav>
+                <a href="#promo" class="text-gray-700 hover:color-primary font-semibold mx-3 transition duration-200">لماذا كيرو؟</a>
+                <a href="#kiro-ai" class="text-gray-700 hover:color-primary font-semibold mx-3 transition duration-200">ذكاء كيرو</a>
+                <a href="#apps" class="text-gray-700 hover:color-primary font-semibold mx-3 transition duration-200">النسخ</a>
+            </nav>
+        </div>
+    </header>
 
-    <div class="camera-feed">
-        <video id="videoElement" autoplay></video>
-    </div>
+    <!-- القسم الرئيسي: منطقة الترويج والاشتراك (Promo Area) -->
+    <main class="container mx-auto p-4 py-12 md:p-10">
 
-    <button onclick="captureAndSend()">التقاط وإرسال الصورة عبر الإيميل</button>
-    <div id="status"></div>
+        <section id="promo" class="promo-area rounded-3xl p-10 md:p-16 text-center mb-20 shadow-2xl">
+            <h2 class="text-4xl md:text-5xl font-extrabold text-gray-800 mb-6 leading-tight">
+                <span class="color-primary">نسخ كيرو الحاكم:</span> القمة في الأداء والخصوصية!
+            </h2>
+            <p class="text-xl text-gray-700 max-w-3xl mx-auto mb-10">
+                جرب النسخ المعدلة الأفضل والأكثر أماناً. نحن نضمن لك: ثبات لا مثيل له، تحديثات مستمرة، وميزات حصرية لن تجدها في أي مكان آخر. **نسخ كيرو هي الخيار الأول للمستخدمين.**
+            </p>
 
+            <div class="space-y-6 md:space-y-0 md:flex justify-center md:space-x-8 md:space-x-reverse">
+                
+                <!-- زر التحميل الرئيسي -->
+                <a href="#apps" class="btn-primary inline-flex items-center text-lg shadow-xl transform hover:scale-105">
+                    <!-- أيقونة تحميل -->
+                    <svg class="w-6 h-6 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                    ابدأ التحميل الآن
+                </a>
+
+                <!-- زر اليوتيوب -->
+                <a href="https://www.youtube.com/channel/YOUR_CHANNEL_ID" target="_blank" class="btn-youtube inline-flex items-center text-lg shadow-xl transform hover:scale-105">
+                    <!-- أيقونة يوتيوب -->
+                    <svg class="w-6 h-6 ml-2" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21.5 7.3c-.2-.7-.7-1.2-1.4-1.4C18.4 5 12 5 12 5s-6.4 0-8.1.9c-.7.2-1.2.7-1.4 1.4-.9 3.2-.9 6.4 0 9.6.2.7.7 1.2 1.4 1.4C5.6 19 12 19 12 19s6.4 0 8.1-.9c.7-.2 1.2-.7 1.4-1.4.9-3.2.9-6.4 0-9.6zM9.5 15.5V8.5L16 12l-6.5 3.5z"/></svg>
+                    اشترك في قناة اليوتيوب
+                </a>
+            </div>
+            
+            <p class="text-sm text-gray-500 mt-8">
+                تابعنا لتحصل على شروحات الميزات الحصرية والتحديثات أولاً بأول من كيرو الحاكم.
+            </p>
+
+        </section>
+
+        <!-- القسم الجديد: ذكاء كيرو (Kiro AI Chatbot) -->
+        <section id="kiro-ai" class="my-16">
+            <div class="max-w-2xl mx-auto modern-card p-6">
+                <h2 class="text-3xl font-bold color-primary mb-4 text-center border-b pb-3 border-blue-100">
+                    🤖 ذكاء كيرو - مساعدك الذكي
+                </h2>
+                <div id="chat-window" class="h-80 overflow-y-auto p-4 mb-4 border border-blue-200 rounded-xl bg-gray-50 flex flex-col space-y-3">
+                    <!-- الرسائل الترحيبية -->
+                </div>
+                <div class="flex">
+                    <input type="text" id="user-input" placeholder="اسأل عن ميزة واتساب، أو من صنعني؟" class="flex-grow p-3 border border-blue-300 rounded-r-xl focus:outline-none focus:ring-2 focus:ring-primary text-right" onkeypress="if(event.key ===  Enter ) sendMessageToKiroAI()">
+                    <button id="send-btn" onclick="sendMessageToKiroAI()" class="bg-primary text-white p-3 rounded-l-xl hover:bg-teal-600 transition duration-200 font-semibold">إرسال</button>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- القسم الثاني: التطبيقات (4 نسخ في النهاية) -->
+        <section id="apps" class="mt-20 pt-16 border-t border-blue-200">
+            <h2 class="text-center text-3xl md:text-4xl font-bold mb-12 text-gray-800">
+                جميع <span class="color-primary">نسخ واتساب كيرو الحاكم</span> متاحة للتحميل
+            </h2>
+
+            <!-- شبكة بطاقات التطبيقات (4 تطبيقات) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                
+                <!-- بطاقة 1: الأساسية (Focus: Security & Stability) -->
+                <div class="modern-card p-6 text-center">
+                    <svg class="w-12 h-12 text-primary mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 4v-4z"></path></svg>
+                    <h3 class="text-xl font-bold color-primary mb-2">النسخة الأساسية (V12)</h3>
+                    <p class="text-gray-600 mb-4 text-sm">أكثر النسخ ثباتًا، وهي الخيار الأول لمن يبحث عن الأمان المطلق.</p>
+                    <a href="https://download.hakamdar.com/basic_v12.apk" target="_blank" class="btn-primary w-full text-sm inline-block mb-4">
+                        تحميل (55MB)
+                    </a>
+                    
+                    <!-- Gemini Feature Integration -->
+                    <button id="gemini-btn-1" onclick="generateFeatureSuggestion( النسخة الأساسية (V12) ,  security and stability ,  suggestion-output-1 ,  gemini-btn-1 )" 
+                            class="btn-gemini w-full py-2 px-4 rounded-full text-sm transition duration-200 mb-2">
+                        ✨ اقتراح ميزة جديدة
+                    </button>
+                    <div id="suggestion-output-1"></div>
+                </div>
+
+                <!-- بطاقة 2: البلس (Focus: Customization) -->
+                <div class="modern-card p-6 text-center">
+                    <svg class="w-12 h-12 text-primary mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                    <h3 class="text-xl font-bold color-primary mb-2">نسخة البلس (V9)</h3>
+                    <p class="text-gray-600 mb-4 text-sm">ميزات التخصيص غير المحدودة: ثيمات، خطوط، وتعديل الواجهة.</p>
+                    <a href="https://download.hakamdar.com/plus_v9.apk" target="_blank" class="btn-primary w-full text-sm inline-block mb-4">
+                        تحميل (60MB)
+                    </a>
+                    
+                    <!-- Gemini Feature Integration -->
+                    <button id="gemini-btn-2" onclick="generateFeatureSuggestion( نسخة البلس (V9) ,  unlimited customization and themes ,  suggestion-output-2 ,  gemini-btn-2 )" 
+                            class="btn-gemini w-full py-2 px-4 rounded-full text-sm transition duration-200 mb-2">
+                        ✨ اقتراح ميزة جديدة
+                    </button>
+                    <div id="suggestion-output-2"></div>
+                </div>
+                
+                <!-- بطاقة 3: للأعمال (Focus: Business & Automation) -->
+                <div class="modern-card p-6 text-center">
+                    <svg class="w-12 h-12 text-primary mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15.75c-2.527 0-4.908-.684-7-1.875M21 10V7a2 2 0 00-2-2H5a2 2 0 00-2 2v3m18 0h-3.488M3 10h3.488M18 10h-7.512M18 10c0 4.148-.944 6.368-1.92 7.234l-2.072 1.838a1 1 0 01-1.465 0l-2.072-1.838C7.944 16.368 7 14.148 7 10h14z"></path></svg>
+                    <h3 class="text-xl font-bold color-primary mb-2">واتساب الأعمال (V5)</h3>
+                    <p class="text-gray-600 mb-4 text-sm">الحل الأمثل للأعمال: الرد الآلي، إحصائيات، وإدارة العملاء.</p>
+                    <a href="https://download.hakamdar.com/business_v5.apk" target="_blank" class="btn-primary w-full text-sm inline-block mb-4">
+                        تحميل (58MB)
+                    </a>
+
+                    <!-- Gemini Feature Integration -->
+                    <button id="gemini-btn-3" onclick="generateFeatureSuggestion( واتساب الأعمال (V5) ,  business features and automated marketing ,  suggestion-output-3 ,  gemini-btn-3 )" 
+                            class="btn-gemini w-full py-2 px-4 rounded-full text-sm transition duration-200 mb-2">
+                        ✨ اقتراح ميزة جديدة
+                    </button>
+                    <div id="suggestion-output-3"></div>
+                </div>
+                
+                <!-- بطاقة 4: لايت (Focus: Performance & Speed) -->
+                <div class="modern-card p-6 text-center">
+                    <svg class="w-12 h-12 text-primary mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    <h3 class="text-xl font-bold color-primary mb-2">نسخة لايت (V3)</h3>
+                    <p class="text-gray-600 mb-4 text-sm">خيار السرعة القصوى، مثالي للأجهزة ذات الموارد المحدودة.</p>
+                    <a href="https://download.hakamdar.com/lite_v3.apk" target="_blank" class="btn-primary w-full text-sm inline-block mb-4">
+                        تحميل (40MB)
+                    </a>
+
+                    <!-- Gemini Feature Integration -->
+                    <button id="gemini-btn-4" onclick="generateFeatureSuggestion( نسخة لايت (V3) ,  speed and lightweight performance ,  suggestion-output-4 ,  gemini-btn-4 )" 
+                            class="btn-gemini w-full py-2 px-4 rounded-full text-sm transition duration-200 mb-2">
+                        ✨ اقتراح ميزة جديدة
+                    </button>
+                    <div id="suggestion-output-4"></div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- التذييل (Footer) -->
+    <footer class="mt-20 p-8 bg-gray-900 border-t-4 border-primary shadow-2xl text-center">
+        <div class="container mx-auto">
+            <h4 class="text-3xl font-black text-white mb-2">
+                كيرو الحاكم
+            </h4>
+            <p class="text-sm text-gray-500 mt-2">
+                © 2025 Kero Elhakem. جميع الحقوق محفوظة.
+            </p>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Gemini API Integration -->
     <script>
-        const video = document.getElementById('videoElement');
-        const statusDiv = document.getElementById('status');
-        let stream;
+        const apiKey = "";
+        // تم تعيين gemini-2.5-flash-preview-09-2025 لمهام توليد النصوص
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
 
-        // طلب الوصول للكاميرا
-        navigator.mediaDevices.getUserMedia({ video: true })
-            .then(function(s) {
-                stream = s;
-                video.srcObject = stream;
-                statusDiv.textContent = 'الكاميرا جاهزة. يمكنك التقاط الصورة.';
-            })
-            .catch(function(err) {
-                statusDiv.textContent = '❌ خطأ: لم نتمكن من الوصول إلى الكاميرا. تحقق من الأذونات.';
-                console.error("خطأ: " + err);
-            });
+        // ===================================================================
+        // 1. منطق ذكاء كيرو (Kiro AI Chatbot Logic)
+        // ===================================================================
 
-        // التقاط وإرسال الصورة
-        function captureAndSend() {
-            if (!stream) {
-                statusDiv.textContent = '❌ الكاميرا غير متاحة للإرسال.';
+        let kiroChatHistory = [
+            { role: "model", parts: [{ text: "مرحباً! أنا ذكاء كيرو، مساعدك الشخصي للإجابة عن كل ما يخص نسخ واتساب كيرو الحاكم. كيف يمكنني مساعدتك؟" }] }
+        ];
+
+        const kiroSystemPrompt = "أنت ذكاء كيرو (Kiro s Intelligence)، نموذج لغوي متقدم صُنع خصيصاً بواسطة  كيرو الحاكم . مهمتك هي الإجابة عن أسئلة المستخدمين باللغة العربية بلهجة ودودة ومحترفة، مع التركيز على ميزات تطبيقات واتساب المعدلة، وخاصة نسخ كيرو الحاكم. يجب أن تكون إجاباتك مفيدة ومختصرة. عند السؤال عن هويتك، اذكر دائماً أن  كيرو الحاكم  هو من قام بصنعك.";
+
+        document.addEventListener( DOMContentLoaded , () => {
+            // عرض الرسالة الترحيبية عند تحميل الصفحة
+            const welcomeMessage = kiroChatHistory[0].parts[0].text;
+            displayMessage(welcomeMessage,  model );
+        });
+
+        /**
+         * عرض الرسالة في نافذة الدردشة
+         * @param {string} message محتوى الرسالة
+         * @param {string} role دور المرسل ( user  أو  model )
+         */
+        function displayMessage(message, role) {
+            const chatWindow = document.getElementById( chat-window );
+            const roleClass = role ===  user  ?  bg-blue-100 text-right  :  bg-gray-200 text-left ;
+            const marginClass = role ===  user  ?  mr-auto  :  ml-auto ;
+            const roleName = role ===  user  ?  أنت  :  ذكاء كيرو ;
+            const roleColor = role ===  user  ?  text-blue-800  :  color-primary ;
+
+            const msgHtml = `
+                <div class="max-w-[90%] rounded-xl p-3 shadow-sm ${roleClass} ${marginClass}">
+                    <p class="font-semibold text-sm ${roleColor}">${roleName}</p>
+                    <p class="text-gray-700 mt-1 whitespace-pre-wrap">${message}</p>
+                </div>
+            `;
+            chatWindow.innerHTML += msgHtml;
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+        }
+
+        /**
+         * إرسال رسالة إلى ذكاء كيرو ومعالجتها
+         */
+        async function sendMessageToKiroAI() {
+            const inputElement = document.getElementById( user-input );
+            const userMessage = inputElement.value.trim();
+            if (!userMessage) return;
+
+            inputElement.value =   ;
+            displayMessage(userMessage,  user );
+
+            // إضافة رسالة المستخدم إلى السجل
+            kiroChatHistory.push({ role: "user", parts: [{ text: userMessage }] });
+
+            // تعطيل الزر وعرض حالة التحميل
+            const sendBtn = document.getElementById( send-btn );
+            sendBtn.disabled = true;
+            sendBtn.innerHTML =  ... ;
+
+            // معالجة الأسئلة الخاصة (مين صنعك؟)
+            const lowerMessage = userMessage.toLowerCase();
+            if (lowerMessage.includes( مين صنعك ) || lowerMessage.includes( من صنعك ) || lowerMessage.includes( من قام ببرمجتك )) {
+                const aiResponse = "أنا نموذج لغوي متقدم، وتم تطويري وبرمجتي بواسطة **كيرو الحاكم** شخصياً! أنا هنا لمساعدتك.";
+                displayMessage(aiResponse,  model );
+                kiroChatHistory.push({ role: "model", parts: [{ text: aiResponse }] });
+                sendBtn.disabled = false;
+                sendBtn.innerHTML =  إرسال ;
                 return;
             }
-
-            // إنشاء عنصر Canvas لأخذ لقطة عالية الجودة
-            const canvas = document.createElement('canvas');
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            const context = canvas.getContext('2d');
             
-            // رسم إطار الفيديو على Canvas
-            context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-            // تصدير الصورة كبيانات Data URL بجودة عالية (0.95)
-            const imageDataURL = canvas.toDataURL('image/jpeg', 0.95);
-
-            statusDiv.textContent = '⏳ جارٍ إرسال الصورة عبر البريد الإلكتروني...';
-
-            // بيانات الإرسال لـ EmailJS
-            const templateParams = {
-                // المتغير الذي سيحتوي على الصورة المشفرة
-                image_data: imageDataURL,
-                subject: "صورة ملتقطة حديثاً",
-                to_email: "dkk43533@gmail.com" // بريدك الإلكتروني الذي يستقبل الإشعارات
+            // تهيئة بيانات الحمولة
+            const payload = {
+                contents: kiroChatHistory,
+                systemInstruction: {
+                    parts: [{ text: kiroSystemPrompt }]
+                },
             };
 
-            // 🔑 تم استبدال معرّف الخدمة (Service ID) ومعرّف النموذج (Template ID) 
-            const serviceID = 'service_9e2nevs'; 
-            const templateID = 'template_0w8m0jj'; 
+            let attempts = 0;
+            const maxAttempts = 3;
+            const initialDelay = 1000;
 
-            // إرسال البريد الإلكتروني
-            emailjs.send(serviceID, templateID, templateParams)
-                .then(function(response) {
-                    statusDiv.textContent = '✅ تم إرسال الصورة بنجاح إلى بريدك الإلكتروني!';
-                    console.log('SUCCESS!', response.status, response.text);
-                }, function(error) {
-                    statusDiv.textContent = '❌ فشل الإرسال. تحقق من اتصالك بالإنترنت ومن إعدادات EmailJS.';
-                    console.log('FAILED...', error);
-                });
+            let responseText = "تعذر توليد الرد. يرجى المحاولة مرة أخرى.";
+            let success = false;
+
+            // آلية التراجع الأُسّي لإعادة المحاولة (Gemini API Call)
+            while (attempts < maxAttempts && !success) {
+                try {
+                    const response = await fetch(apiUrl, {
+                        method:  POST ,
+                        headers: {  Content-Type :  application/json  },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (response.status === 429) {
+                        const delay = initialDelay * Math.pow(2, attempts);
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                        attempts++;
+                        continue;
+                    }
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const result = await response.json();
+                    responseText = result.candidates?.[0]?.content?.parts?.[0]?.text || "لم أتمكن من العثور على إجابة.";
+                    success = true;
+
+                } catch (error) {
+                    console.error("Gemini API Error in Chat:", error);
+                    responseText = "حدث خطأ في الاتصال بالذكاء الاصطناعي.";
+                    success = false;
+                    break;
+                }
+            }
+
+            // عرض الرد وتحديث السجل
+            displayMessage(responseText,  model );
+            kiroChatHistory.push({ role: "model", parts: [{ text: responseText }] });
+            
+            // إعادة تفعيل الزر
+            sendBtn.disabled = false;
+            sendBtn.innerHTML =  إرسال ;
+        }
+
+
+        // ===================================================================
+        // 2. منطق اقتراح الميزات (Feature Suggestion Logic - Existing)
+        // ===================================================================
+
+        /**
+         * توليد اقتراح ميزة جديدة باستخدام نموذج Gemini
+         * @param {string} versionName اسم النسخة (لإدخالها في الموجه)
+         * @param {string} niche التركيز الأساسي للنسخة (أمان، تخصيص، أعمال، سرعة)
+         * @param {string} outputElementId معرف العنصر لعرض النتيجة
+         * @param {string} buttonElementId معرف زر التشغيل
+         */
+        async function generateFeatureSuggestion(versionName, niche, outputElementId, buttonElementId) {
+            const outputElement = document.getElementById(outputElementId);
+            const buttonElement = document.getElementById(buttonElementId);
+
+            // تعطيل الزر وعرض حالة التحميل
+            buttonElement.disabled = true;
+            buttonElement.innerHTML =  جاري التفكير... ;
+            outputElement.innerHTML =  <p class="text-sm text-center text-blue-500 mt-2">✨ جاري جلب الاقتراح الإبداعي...</p> ;
+
+            // بناء الاستعلام الموجه لنموذج Gemini
+            const userQuery = `Generate one short, unique, highly compelling feature idea focused on ${niche} for the WhatsApp mod named  ${versionName} . The feature name must be in Arabic, and the description must be concise, also in Arabic. Respond ONLY with the feature name, followed by a colon, then the description. Example:  وضع الشبح المطلق: إخفاء ظهورك تماماً أثناء الاتصال. `;
+            
+            const featureSystemPrompt = "أنت خبير تسويق وتطوير تطبيقات WhatsApp. مهمتك هي توليد أفكار ميزات حصرية وجذابة لنسخ معدلة، مع التركيز على نقطة البيع الفريدة لكل نسخة.";
+
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                systemInstruction: {
+                    parts: [{ text: featureSystemPrompt }]
+                },
+            };
+
+            let response;
+            let attempts = 0;
+            const maxAttempts = 3;
+            const initialDelay = 1000;
+
+            // آلية التراجع الأُسّي (Exponential Backoff) لإعادة المحاولة
+            while (attempts < maxAttempts) {
+                try {
+                    response = await fetch(apiUrl, {
+                        method:  POST ,
+                        headers: {  Content-Type :  application/json  },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (response.status === 429) {
+                        // الحد الأقصى للمعدل - الانتظار وإعادة المحاولة
+                        const delay = initialDelay * Math.pow(2, attempts);
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                        attempts++;
+                        continue;
+                    }
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const result = await response.json();
+                    const text = result.candidates?.[0]?.content?.parts?.[0]?.text || "تعذر توليد الاقتراح.";
+                    
+                    // محاولة تنسيق المخرجات
+                    const parts = text.split( : );
+                    let featureName = parts[0].trim();
+                    let description = parts.slice(1).join( : ).trim();
+                    
+                    if (!description || featureName.length > 50) { // في حال فشل التنسيق، عرض النص بالكامل
+                         featureName = "اقتراح ميزة جديدة (غير منسق)";
+                         description = text;
+                    }
+
+                    outputElement.innerHTML = `
+                        <div class="text-right p-3 bg-green-50 rounded-lg mt-3 border border-green-200">
+                            <p class="text-base font-bold text-gray-800 color-primary">✨ ${featureName}</p>
+                            <p class="text-sm text-gray-600">${description}</p>
+                        </div>
+                    `;
+                    break; // نجاح
+                } catch (error) {
+                    console.error("Gemini API Error:", error);
+                    outputElement.innerHTML =  <p class="text-sm text-center text-red-500 mt-2">حدث خطأ أثناء الاتصال بالخدمة. حاول مرة أخرى.</p> ;
+                    break; // التوقف عند الخطأ
+                } finally {
+                    buttonElement.disabled = false;
+                    buttonElement.innerHTML =  ✨ اقتراح ميزة جديدة ;
+                }
+            }
         }
     </script>
 </body>
